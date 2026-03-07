@@ -32,6 +32,28 @@ uv sync --group dev
 uv run fastapi dev main.py        # or: uv run uvicorn main:app --reload
 ```
 
+## Running with Docker
+
+### Prerequisites
+- Docker Desktop installed and running
+
+### Setup
+```bash
+docker-compose up --build
+```
+
+API will be live at `http://localhost:8000`
+Swagger docs at `http://localhost:8000/docs`
+
+### Useful Commands
+
+| Command | Description |
+|---|---|
+| `docker-compose up --build` | Build and start the container |
+| `docker-compose down` | Stop the container |
+| `docker-compose logs -f` | View live container logs |
+| `docker ps` | See running containers |
+
 ## Environment Variables
 | Name             | Required | Description                                   | Example    |
 |------------------|----------|-----------------------------------------------|------------|
