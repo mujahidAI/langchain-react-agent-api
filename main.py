@@ -1,5 +1,9 @@
 from fastapi import FastAPI
 from routers.agents import router as agents_router
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI(
     title="Agent API",

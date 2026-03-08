@@ -17,6 +17,8 @@ Production-ready FastAPI service exposing a LangChain ReAct agent backed by Groq
 ├─ services/tools/     # tavily search, calculator, datetime tools
 ├─ routers/            # FastAPI route definitions
 ├─ schemas/            # Pydantic request/response models
+├─ callbacks/          # LangChain callback handlers
+├─ logs/               # Log files and directory
 ├─ main.py             # FastAPI app factory / entrypoint
 ├─ react_prompt.txt    # ReAct prompt template
 ├─ .env.example        # sample environment variables
@@ -102,6 +104,26 @@ Example response:
   ]
 }
 ```
+## Monitoring & Tracing
+
+This project uses [LangSmith](https://smith.langchain.com) for full observability into every agent run.
+
+Every request is automatically traced, showing:
+- Full prompt and response for every LLM call
+- Tool calls with inputs and outputs
+- Token usage and latency per step
+- Error traces
+
+### Setup
+
+Add these to your `.env`:
+```
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=your_langsmith_api_key
+LANGCHAIN_PROJECT=agent-api
+```
+
+Then view traces at [smith.langchain.com](https://smith.langchain.com).
 
 ## How the ReAct Agent Works
 - The prompt enforces the loop: Thought → Action → Action Input → Observation.
