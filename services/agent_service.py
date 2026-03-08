@@ -7,6 +7,7 @@ from langchain_classic.agents.react.agent import create_react_agent
 from langchain_core.prompts import PromptTemplate
 from langchain_groq import ChatGroq
 
+from callbacks import LoggingCallbackHandler
 from services.tools import all_tools
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -36,6 +37,7 @@ class AgentService:
             model=self.model_name,
             temperature=temperature,
         )
+        self.callback_handler = LoggingCallbackHandler()
 
     def run(self, query: str) -> dict:
         agent = create_react_agent(
@@ -48,7 +50,8 @@ class AgentService:
             tools=all_tools,
             max_iterations=self.max_iterations,
             handle_parsing_errors=True,
-            verbose=True,
+            verbose=False,
+            callbacks=[self.callback_handler],
             return_intermediate_steps=True,
         )
         result = executor.invoke({"input": query})
